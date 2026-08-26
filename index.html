@@ -1,128 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sporting</title>
+  <title>Sporting | Indumentaria deportiva</title>
+  <link href="style.css" rel="stylesheet">
 
-  <!-- Bootstrap CSS (CDN) -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <!-- ===================== HEADER / NAVBAR ===================== -->
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">Sporting</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navMenu">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="#nosotros">Nosotros</a></li>
-            <li class="nav-item"><a class="nav-link" href="#servicios">Servicios / Productos</a></li>
-            <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
-          </ul>
-        </div>
-      </div>
+    <p class="logo">Sporting</p>
+    <nav>
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
     </nav>
   </header>
 
-  <!-- ===================== MAIN ===================== -->
   <main>
-
-    <!-- Sección Hero -->
-    <section id="inicio" class="text-white text-center py-5" style="background-color: #67e756;">
-      <div class="container">
-        <h1 class="display-4">Bienvenidos a Sporting</h1>
-        <p class="lead">#ElDeporteTeHaceBien 
-         Indumentaria, calzado y accesorios deportivos.
-          3 cuotas sin interés, Envios a todo el país</p>
-        <a href="#servicios" class="btn btn-light btn-lg mt-3">Ver más</a>
-      </div>
+    <section id="inicio">
+      <h1>Bienvenidos a Sporting</h1>
+      <p>Indumentaria, calzado y accesorios deportivos.</p>
+      <p>3 cuotas sin interés y envíos a todo el país.</p>
+      <a href="#productos">Ver productos</a>
     </section>
 
-    <!-- Sección Nosotros -->
-    <section id="nosotros" class="py-5 bg-dark text-white">
-      <div class="container">
-        <h2 class="mb-4">Sobre Sporting </h2>
-        <p>
-         Sporting es una empresa dedicada a la venta de indumentaria,
-            calzado y accesorios deportivos. Nuestro objetivo es ofrecer
-            productos de calidad de las mejores marcas, brindando una
-            excelente atención y una buena experiencia de compra.
-        </p>
-      </div>
+    <section id="nosotros">
+      <h2>Sobre Sporting</h2>
+      <p>Somos una empresa dedicada a la venta de indumentaria, calzado y accesorios deportivos. Buscamos ofrecer productos de calidad y una buena experiencia de compra.</p>
     </section>
 
-    <!-- Sección Servicios / Productos -->
-<section id="servicios" class="py-5 bg-light">
-  <div class="container">
-    <h2 class="mb-4">Servicios / Productos</h2>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="img/nike1.jpg" class="card-img-top" alt="Ítem 1">
-          <div class="card-body">
-            <h3 class="card-title h5">Nike Forum Low</h3>
-            <p class="card-text">Zapatillas de estilo clásico con acabado premium.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="img/nike2.webp" class="card-img-top" alt="Ítem 2">
-          <div class="card-body">
-            <h3 class="card-title h5">Zapatillas Runfoam Nike </h3>
-            <p class="card-text">Las Nike Runfoam 6 son zapatillas versátiles ideales para corredores principiantes, caminatas y el uso diario. Combinan una malla transpirable con una mediasuela Cloudfoam que ofrece una amortiguación suave y cómoda. Son perfectas para distancias cortas (hasta 10 km) y entrenamientos ligeros sobre asfalto.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="card h-100">
-          <img src="img/argentinacamiseta.jpg" class="card-img-top" alt="Ítem 3">
-          <div class="card-body">
-            <h3 class="card-title h5">Camiseta Argentina Titular 2026</h3>
-            <p class="card-text">Camiseta oficial del equipo nacional de fútbol de Argentina para el Mundial 2026.</p>
-          </div>
-        </div>
-      </div>
+    <section id="productos">
+      <h2>Productos destacados</h2>
+    <div class="products-grid">
+      <article>
+        <img src="img/nike1.jpg" alt="Zapatillas Nike Forum Low">
+        <h3>Nike Forum Low</h3>
+        <p>Zapatillas de estilo clásico con acabado premium.</p>
+      </article>
+      <article>
+        <img src="img/nike2.webp" alt="Zapatillas Nike Runfoam 6">
+        <h3>Nike Runfoam 6</h3>
+        <p>Zapatillas cómodas para correr, caminar y usar todos los días.</p>
+      </article>
+      <article>
+        <img src="img/argentinacamiseta.jpg" alt="Camiseta titular de Argentina 2026">
+        <h3>Camiseta Argentina Titular 2026</h3>
+        <p>Camiseta oficial de la selección argentina de fútbol.</p>
+      </article>
     </div>
-  </div>
-</section>
-    <!-- Sección Contacto -->
-    <!-- Sección Contacto -->
-<section id="contacto" class="py-5 bg-light">
-    <div class="container">
-        <h2 class="mb-4">Contacto</h2>
+    </section>
 
-        <p>
-            Si tenés alguna consulta sobre nuestros productos,
-            podés comunicarte con nosotros.
-        </p>
-
-        <p><strong>Teléfono:</strong> 381 000-0000</p>
-        <p><strong>Email:</strong> contacto@sporting.com.ar</p>
-        <p><strong>Horario:</strong> Lunes a Viernes de 9:00 a 13:00 y de 17:00 a 21:00 hs. y sábados de 9:00 a 13:00 hs.</p>
-    </div>
-</section>
-
+    <section id="contacto">
+      <div class="contacto-center">
+      <h2>Contacto</h2>
+      </div>
+      <p>Comunicate con nosotros si tenés consultas sobre nuestros productos.</p>
+      <p><strong>Teléfono:</strong> 381 000-0000</p>
+      <p><strong>Email:</strong> contacto@sporting.com.ar</p>
+      <p><strong>Horario:</strong> Lunes a viernes de 9:00 a 13:00 y de 17:00 a 21:00 hs.</p>
+    </section>
   </main>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="bg-dark text-white text-center py-4">
-    <div class="container">
-      <p class="mb-2">&copy; 2026 Sporting. Todos los derechos reservados.</p>
-      <a href="https://www.instagram.com/sporting_arg/" target="_blank" class="text-white me-3">Instagram</a>
+  <footer>
+    <div class="titulo">
+    <p>Seguinos en redes sociales</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.facebook.com/sporting.arg" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a href="https://www.instagram.com/sporting_arg/" target="_blank" rel="noopener noreferrer">Instagram</a>
+    </div>
+    <div class="footer-copyright">
+    <p>&copy; 2026 Sporting. Todos los derechos reservados.</p>
     </div>
   </footer>
-
-  <!-- Bootstrap JS (CDN) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <!-- JavaScript propio del proyecto -->
-  <script src="js/script.js"></script>
 </body>
 </html>

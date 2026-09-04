@@ -162,6 +162,7 @@ footer a {
 
 :root {
   --primary-color: rgb(11, 213, 18);
+  --main-font: "Roboto", sans-serif;
 }
 .navbar {
   background-color: var(--primary-color);
@@ -172,6 +173,18 @@ footer a {
   transform: scale(4.5);
   transform-origin: left center;
   max-width: 100%;
+}
+main {
+  font-family: var(--main-font);
+}
+#inicio {
+  background-image:
+    url("img/backgroundsporting.png");
+  background-size: cover;
+  background-position: center;
+}
+#inicio .btn{
+  background-color:var(--primary-color);    
 }
 
 @media (max-width: 991px) {

@@ -1,5 +1,4 @@
-/* COLORES, FUENTES Y MEDIDAS QUE USO EN TODO EL PROYECTO */
-
+/* 
 :root {
   --primary-color: rgb(1, 250, 9);
   --secondary-color: #000000;
@@ -16,9 +15,6 @@
 
   --border-radius: 10px;
 }
-
-
-/* ESTILO GENERAL Y TIPOGRAFÍA BASE DEL SITIO */
 
 * {
   margin: 0;
@@ -38,8 +34,6 @@ h3 {
   font-family: var(--title-font);
 }
 
-
-/* BARRA SUPERIOR Y MENÚ DE NAVEGACIÓN */
 
 header {
   display: flex;
@@ -63,8 +57,6 @@ nav ul {
 }
 
 
-/* SECCIÓN INICIO */
-
 #inicio {
   display: flex;
   flex-direction: column;
@@ -79,9 +71,6 @@ nav ul {
   color: var(--primary-color)
 }
 
-
-/* SECCIÓN NOSOTROS */
-
 #nosotros {
   display: flex;
   flex-direction: column;
@@ -91,45 +80,6 @@ nav ul {
   border-bottom: 5px solid var(--primary-color);
 }
 
-
-/* SECCIÓN PRODUCTOS */
-
-#productos {
-  text-align: center;
-  background-color: var(--white);
-  padding: var(--spacing-medium)
-}
-
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--spacing-medium);
-}
-
-.products-grid img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.products-grid article {
-  background-color: var(--white);
-  padding: var(--spacing-medium);
-  border: 2px solid var(--primary-color);
-  border-radius: var(--border-radius);
-}
-
-#productos h2 {
-  margin-bottom: var(--spacing-medium);
-}
-
-.products-grid h3 {
-  margin-top: var(--spacing-small);
-  margin-bottom: var(--spacing-small);
-}
-
-
-/* SECCIÓN CONTACTO */
 
 #contacto {
   display: flex;
@@ -143,8 +93,6 @@ nav ul {
   text-align: center;
 }
 
-
-/* FOOTER */
 
 footer {
   background-color: var(--white);
@@ -174,27 +122,141 @@ footer a {
   padding: var(--spacing-small);
   text-align: left;
 }
+*/
 
+:root {
+  --primary-color: hsl(106, 78%, 41%);
+  --main-font: "Roboto", sans-serif;
+}
 
-/* AJUSTES PARA PANTALLAS MÁS CHICAS */
+.navbar {
+  background-color: var(--primary-color);
+  font-family: "Oswald", sans-serif;
+  font-size: 1.3rem;
+}
 
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    gap: var(--spacing-medium);
+.logo-navbar {
+  transform: scale(4.5);
+  transform-origin: left center;
+  max-width: 100%;
+}
+
+main {
+  font-family: var(--main-font);
+  background-image: url("img/fondotodocompu.png");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Oswald", sans-serif;
+}
+
+#inicio {
+  background-color: transparent;
+}
+
+#nosotros {
+  background-color: transparent !important;
+}
+
+#inicio .btn {
+  background-color: var(--primary-color);
+}
+
+.card {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.card-title {
+  text-align: center;
+}
+
+.card .list-group-item {
+  background-color: transparent;
+  color: inherit;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+#productos .card {
+  background-color: #ffffff;
+  color: #000000;
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18) !important;
+}
+
+#productos .card-img-top {
+  height: 320px;
+  object-fit: contain;
+}
+
+#productos .card-body {
+  padding: 1.5rem;
+}
+
+.btn-primary-sporting {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-primary-sporting:hover,
+.btn-primary-sporting:focus {
+  background-color: #099f10;
+  border-color: #099f10;
+  color: #ffffff;
+}
+
+#contacto {
+  background-color: transparent;
+}
+
+.contacto-info,
+.contacto-form {
+  background-color: #ffffff;
+  border-top: 4px solid var(--primary-color);
+}
+
+.contacto-info .list-group-item {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.contacto-form .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(23, 188, 23, 0.808);
+}
+
+.footer-sporting {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.footer-sporting hr {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-sporting .btn-outline-light:hover {
+  color: #080404;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+@media (max-width: 767px) {
+  main {
+    background-image: url("img/fondotodocelu.png");
   }
 
-  nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
+  .logo-navbar {
+    transform: scale(4.5);
   }
 
-  .products-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .footer-links {
-    flex-direction: column;
-    align-items: center;
+  .navbar .container-fluid {
+    padding-inline: 1rem;
   }
 }

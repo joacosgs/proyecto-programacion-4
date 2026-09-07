@@ -128,16 +128,19 @@ footer a {
   --primary-color: hsl(106, 78%, 41%);
   --main-font: "Roboto", sans-serif;
 }
+
 .navbar {
   background-color: var(--primary-color);
   font-family: "Oswald", sans-serif;
   font-size: 1.3rem;
 }
+
 .logo-navbar {
   transform: scale(4.5);
   transform-origin: left center;
   max-width: 100%;
 }
+
 main {
   font-family: var(--main-font);
   background-image: url("img/fondotodocompu.png");

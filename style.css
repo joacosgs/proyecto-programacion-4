@@ -187,6 +187,55 @@ main {
   background-color:var(--primary-color);    
 }
 
+.btn-primary-sporting {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.btn-primary-sporting:hover,
+.btn-primary-sporting:focus {
+  background-color: #099f10;
+  border-color: #099f10;
+  color: #ffffff;
+}
+
+#contacto {
+  background-color: #f4f8f4;
+}
+
+.contacto-info,
+.contacto-form {
+  background-color: #ffffff;
+  border-top: 4px solid var(--primary-color);
+}
+
+.contacto-info .list-group-item {
+  background-color: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.contacto-form .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(23, 188, 23, 0.808);
+}
+
+.footer-sporting {
+  background-color: hsl(106, 78%, 41%);
+  color: #ffffff;
+}
+
+.footer-sporting hr {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.footer-sporting .btn-outline-light:hover {
+  color: #080404;
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
 @media (max-width: 991px) {
   .logo-navbar {
     transform: scale(4.5);

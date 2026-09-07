@@ -1,5 +1,5 @@
+/* COLORES, FUENTES Y MEDIDAS QUE USO EN TODO EL PROYECTO */
 
-/* 
 :root {
   --primary-color: rgb(1, 250, 9);
   --secondary-color: #000000;
@@ -16,6 +16,9 @@
 
   --border-radius: 10px;
 }
+
+
+/* ESTILO GENERAL Y TIPOGRAFÍA BASE DEL SITIO */
 
 * {
   margin: 0;
@@ -35,6 +38,8 @@ h3 {
   font-family: var(--title-font);
 }
 
+
+/* BARRA SUPERIOR Y MENÚ DE NAVEGACIÓN */
 
 header {
   display: flex;
@@ -58,6 +63,8 @@ nav ul {
 }
 
 
+/* SECCIÓN INICIO */
+
 #inicio {
   display: flex;
   flex-direction: column;
@@ -72,6 +79,9 @@ nav ul {
   color: var(--primary-color)
 }
 
+
+/* SECCIÓN NOSOTROS */
+
 #nosotros {
   display: flex;
   flex-direction: column;
@@ -81,6 +91,8 @@ nav ul {
   border-bottom: 5px solid var(--primary-color);
 }
 
+
+/* SECCIÓN PRODUCTOS */
 
 #productos {
   text-align: center;
@@ -116,6 +128,9 @@ nav ul {
   margin-bottom: var(--spacing-small);
 }
 
+
+/* SECCIÓN CONTACTO */
+
 #contacto {
   display: flex;
   flex-direction: column;
@@ -128,6 +143,8 @@ nav ul {
   text-align: center;
 }
 
+
+/* FOOTER */
 
 footer {
   background-color: var(--white);
@@ -157,58 +174,27 @@ footer a {
   padding: var(--spacing-small);
   text-align: left;
 }
-*/
 
 
-:root {
-  --primary-color: rgb(11, 213, 18);
-  --main-font: "Roboto", sans-serif;
-}
-.navbar {
-  background-color: var(--primary-color);
-  font-family: "Oswald", sans-serif;
-  font-size: 1.3rem;
-}
-.logo-navbar {
-  transform: scale(4.5);
-  transform-origin: left center;
-  max-width: 100%;
-}
-main {
-  font-family: var(--main-font);
-}
-#inicio {
-  background-image:
-    url("img/backgroundsporting.png");
-  background-size: cover;
-  background-position: center;
-}
-#inicio .btn{
-  background-color:var(--primary-color);    
-}
+/* AJUSTES PARA PANTALLAS MÁS CHICAS */
 
-.tienda-online-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90px;
-  padding: 12px;
-}
-
-.tienda-online-logo img {
-  display: block;
-  width: 100%;
-  max-width: 220px;
-  height: 65px;
-  object-fit: contain;
-}
-
-@media (max-width: 991px) {
-  .logo-navbar {
-    transform: scale(4.5);
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: var(--spacing-medium);
   }
 
-  .navbar .container-fluid {
-    padding-inline: 1rem;
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
   }
 }

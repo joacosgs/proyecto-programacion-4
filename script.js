@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    feedback.textContent = "Gracias, nos contactaremos pronto.";
+    feedback.textContent = "Gracias, nos contactaremos pronto .";
     form.reset();
   });
 });

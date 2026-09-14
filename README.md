@@ -16,6 +16,8 @@ Sporting es una página web de venta de ropa, zapatillas y accesorios deportivos
 - HTML
 - CSS
 - Bootstrap 5
+- JavaScript
+- DOM y eventos
 - Git y GitHub
 
 ## Cómo está hecha la página
@@ -26,6 +28,8 @@ Sporting es una página web de venta de ropa, zapatillas y accesorios deportivos
 - La sección "Productos" muestra tres tarjetas Bootstrap con imágenes, títulos y descripciones.
 - Las tarjetas de productos tienen borde verde, fondo blanco y una sombra para destacarse.
 - El formulario de contacto usa filas y columnas de Bootstrap para acomodarse en computadoras, tabletas y celulares.
+- Se incorporó validación del formulario con JavaScript: se valida que los campos no estén vacíos y que el email contenga el símbolo `@`.
+- Se incorporó una pequeña interacción de productos con botones `+` y `−` para aumentar o disminuir la cantidad y un contador del carrito visible en la barra de navegación.
 - Usamos CSS propio para los colores, las fuentes, los fondos y los detalles visuales.
 - La imagen `fondotodocompu.png` se usa en computadoras y tabletas, mientras que `fondotodocelu.png` se usa en celulares.
 - Usamos las fuentes Roboto para el texto general y Oswald para los títulos.
@@ -61,6 +65,15 @@ Creamos variables para guardar colores, fuentes, espacios y bordes. Por ejemplo:
 - `--main-font`
 - `--spacing-medium`
 - `--border-radius`
+
+## Interacción JavaScript y DOM
+
+La página incorpora una pequeña capa de interactividad con JavaScript usando el DOM y eventos:
+
+1. Validación del formulario de contacto.
+2. Mensaje de feedback visual para el usuario.
+3. Contador de carrito visible en la barra de navegación.
+4. Botones `+` y `−` en cada tarjeta de producto para aumentar o disminuir la cantidad seleccionada.
 
 ## Responsive Design
 

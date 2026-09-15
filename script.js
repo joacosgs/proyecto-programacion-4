@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const cartCount = document.getElementById("cart-count");
+  const cartCountSummary = document.getElementById("cart-count-summary");
   const cartTotalElement = document.getElementById("cart-total");
   const cards = Array.from(document.querySelectorAll(".card"));
   let cartTotal = 0;
@@ -58,6 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentTotal = Number(
       cartTotalElement.textContent.replace("$", "").replace(".", "")
     );
+  
+  if (cartCountSummary) {
+     cartCountSummary.textContent = cartTotal;
+    }
 
     cartTotalElement.textContent = (currentTotal + price).toLocaleString("es-AR");
   }
@@ -71,6 +76,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cartCount) {
       cartCount.textContent = cartTotal;
+    }
+
+    if (cartCountSummary) {
+  cartCountSummary.textContent = cartTotal;
     }
 
     if (cartTotalElement) {

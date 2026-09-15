@@ -74,6 +74,8 @@ La página incorpora una pequeña capa de interactividad con JavaScript usando e
 2. Mensaje de feedback visual para el usuario.
 3. Contador de carrito visible en la barra de navegación.
 4. Botones `+` y `−` en cada tarjeta de producto para aumentar o disminuir la cantidad seleccionada.
+5. Cálculo automático del total del carrito según los productos seleccionados.
+6. Resumen visual del carrito con la cantidad de productos y el precio total.
 
 ## Responsive Design
 

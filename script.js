@@ -24,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const cartCount = document.getElementById("cart-count");
+  const cartCountSummary = document.getElementById("cart-count-summary");
+  const cartTotalElement = document.getElementById("cart-total");
   const cards = Array.from(document.querySelectorAll(".card"));
   let cartTotal = 0;
 
@@ -32,31 +33,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const quantity = card.querySelector(".product-quantity");
     const minus = card.querySelector(".minus");
     const plus = card.querySelector(".plus");
+    const priceElement = card.querySelector(".product-price");
 
-    if (!quantity || !minus || !plus) {
+    if (!quantity || !minus || !plus || !priceElement) {
       return;
     }
 
+    const price = Number(
+      priceElement.textContent.replace("$", "").replace(".", "")
+    );
+
     let quantityValue = 0;
 
-    plus.addEventListener("click", () => {
-      quantityValue++;
-      quantity.textContent = quantityValue;
-      cartTotal++;
-      if (cartCount) {
-        cartCount.textContent = cartTotal;
-      }
-    });
+  plus.addEventListener("click", () => {
+  quantityValue++;
+  quantity.textContent = quantityValue;
+  cartTotal++;
+
+
+  if (cartTotalElement) {
+    const currentTotal = Number(
+      cartTotalElement.textContent.replace("$", "").replace(".", "")
+    );
+  
+  if (cartCountSummary) {
+     cartCountSummary.textContent = cartTotal;
+    }
+
+    cartTotalElement.textContent = (currentTotal + price).toLocaleString("es-AR");
+  }
+});
 
     minus.addEventListener("click", () => {
-      if (quantityValue > 0) {
-        quantityValue--;
-        quantity.textContent = quantityValue;
-        cartTotal--;
-        if (cartCount) {
-          cartCount.textContent = cartTotal;
-        }
-      }
-    });
+  if (quantityValue > 0) {
+    quantityValue--;
+    quantity.textContent = quantityValue;
+    cartTotal--;
+
+
+    if (cartCountSummary) {
+  cartCountSummary.textContent = cartTotal;
+    }
+
+    if (cartTotalElement) {
+      const currentTotal = Number(
+        cartTotalElement.textContent.replace("$", "").replace(".", "")
+      );
+
+      cartTotalElement.textContent = (currentTotal - price).toLocaleString("es-AR");
+    }
+  }
+   });
   });
 });

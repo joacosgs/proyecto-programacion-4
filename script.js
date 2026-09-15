@@ -27,7 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartCountSummary = document.getElementById("cart-count-summary");
   const cartTotalElement = document.getElementById("cart-total");
   const cards = Array.from(document.querySelectorAll(".card"));
-  let cartTotal = 0;
+  let cartQuantityTotal = 0;
+  let cartPriceTotal = 0;
 
   cards.forEach((card) => {
     const quantity = card.querySelector(".product-quantity");
@@ -39,50 +40,44 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const price = Number(
-      priceElement.textContent.replace("$", "").replace(".", "")
-    );
+    const price = Number(priceElement.textContent.replace(/\D/g, ""));
 
     let quantityValue = 0;
 
-  plus.addEventListener("click", () => {
-  quantityValue++;
-  quantity.textContent = quantityValue;
-  cartTotal++;
+    plus.addEventListener("click", () => {
+      if (quantityValue >= 10) {
+        return;
+      }
 
+      quantityValue++;
+      quantity.textContent = quantityValue;
+      cartQuantityTotal++;
+      cartPriceTotal += price;
 
-  if (cartTotalElement) {
-    const currentTotal = Number(
-      cartTotalElement.textContent.replace("$", "").replace(".", "")
-    );
-  
-  if (cartCountSummary) {
-     cartCountSummary.textContent = cartTotal;
-    }
+      if (cartCountSummary) {
+        cartCountSummary.textContent = cartQuantityTotal;
+      }
 
-    cartTotalElement.textContent = (currentTotal + price).toLocaleString("es-AR");
-  }
-});
+      if (cartTotalElement) {
+        cartTotalElement.textContent = cartPriceTotal.toLocaleString("es-AR");
+      }
+    });
 
     minus.addEventListener("click", () => {
-  if (quantityValue > 0) {
-    quantityValue--;
-    quantity.textContent = quantityValue;
-    cartTotal--;
+      if (quantityValue > 0) {
+        quantityValue--;
+        quantity.textContent = quantityValue;
+        cartQuantityTotal--;
+        cartPriceTotal -= price;
 
+        if (cartCountSummary) {
+          cartCountSummary.textContent = cartQuantityTotal;
+        }
 
-    if (cartCountSummary) {
-  cartCountSummary.textContent = cartTotal;
-    }
-
-    if (cartTotalElement) {
-      const currentTotal = Number(
-        cartTotalElement.textContent.replace("$", "").replace(".", "")
-      );
-
-      cartTotalElement.textContent = (currentTotal - price).toLocaleString("es-AR");
-    }
-  }
-   });
+        if (cartTotalElement) {
+          cartTotalElement.textContent = cartPriceTotal.toLocaleString("es-AR");
+        }
+      }
+    });
   });
 });

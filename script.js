@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const cartCount = document.getElementById("cart-count");
   const cartCountSummary = document.getElementById("cart-count-summary");
   const cartTotalElement = document.getElementById("cart-total");
   const cards = Array.from(document.querySelectorAll(".card"));
@@ -51,9 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   quantity.textContent = quantityValue;
   cartTotal++;
 
-  if (cartCount) {
-    cartCount.textContent = cartTotal;
-  }
 
   if (cartTotalElement) {
     const currentTotal = Number(
@@ -74,9 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
     quantity.textContent = quantityValue;
     cartTotal--;
 
-    if (cartCount) {
-      cartCount.textContent = cartTotal;
-    }
 
     if (cartCountSummary) {
   cartCountSummary.textContent = cartTotal;

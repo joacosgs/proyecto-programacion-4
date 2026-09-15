@@ -256,4 +256,31 @@ h3 {
   .navbar .container-fluid {
     padding-inline: 1rem;
   }
+
+  .cart-total {
+  background-color: #ffffff;
+  border: 3px solid var(--primary-color);
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.18);
+}
+
+.cart-total h3 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.cart-products {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.cart-price {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0;
+}
 }

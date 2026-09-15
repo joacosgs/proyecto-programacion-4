@@ -72,7 +72,6 @@
             <a class="nav-link text-white" href="#nosotros">Nosotros</a>
             <a class="nav-link text-white" href="#productos">Productos</a>
             <a class="nav-link text-white" href="#contacto">Contacto</a>
-            <span id="cart-count" class="badge rounded-pill bg-light text-success ms-3">0</span>
           </div>
         </div>
       </div>
@@ -179,6 +178,7 @@
                   <p class="card-text">
                     Zapatillas de estilo clásico con acabado premium.
                   </p>
+                  <p class="product-price">$120.000</p>
                   <div class="d-flex align-items-center gap-2 mt-3">
                     <button type="button" class="btn btn-sm btn-outline-secondary minus">−</button>
                     <span class="product-quantity">0</span>
@@ -200,6 +200,7 @@
                     Zapatillas cómodas para correr, caminar y usar todos los
                     días.
                   </p>
+                  <p class="product-price">$95.000</p>
                   <div class="d-flex align-items-center gap-2 mt-3">
                     <button type="button" class="btn btn-sm btn-outline-secondary minus">−</button>
                     <span class="product-quantity">0</span>
@@ -222,6 +223,7 @@
                   <p class="card-text">
                     Camiseta oficial de la selección argentina de fútbol.
                   </p>
+                  <p class="product-price">$150.000</p>
                   <div class="d-flex align-items-center gap-2 mt-3">
                     <button type="button" class="btn btn-sm btn-outline-secondary minus">−</button>
                     <span class="product-quantity">0</span>
@@ -230,6 +232,11 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="cart-total text-center mt-5">
+            <h3>🛒 Resumen del carrito:</h3>
+            <p class="cart-products">Productos: <span id="cart-count-summary">0</span></p>
+            <p class="cart-price">Total: $<span id="cart-total">0</span></p>
           </div>
         </div>
       </section>

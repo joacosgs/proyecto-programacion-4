@@ -1,37 +1,236 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contactForm");
-  const nombre = document.getElementById("nombre");
-  const email = document.getElementById("email");
-  const mensaje = document.getElementById("mensaje");
-  const feedback = document.getElementById("form-feedback");
+  const STORAGE_KEY = "sportingUserProfile";
+  const $ = (id) => document.getElementById(id);
+  const hasValue = (field) => !!field && field.value.trim() !== "";
+
+  const getSavedProfile = () => {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    } catch {
+      return null;
+    }
+  };
+
+  const saveProfile = (profile) => localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+  const removeProfile = () => localStorage.removeItem(STORAGE_KEY);
+
+  const showProfileAddress = () => {
+    const profileAddress = $("cart-profile-address");
+    const profile = getSavedProfile();
+    if (!profileAddress) return;
+    if (!profile || !profile.direccion) {
+      profileAddress.textContent = "Todavía no creaste un perfil.";
+      return;
+    }
+    profileAddress.textContent = [profile.direccion, profile.localidad, profile.provincia, profile.pais].filter(Boolean).join(", ");
+  };
+
+  const renderProfileState = () => {
+    const profile = getSavedProfile();
+    const registerForm = $("registerForm");
+    const profileSummary = $("profileSummary");
+    const registerFeedback = $("registerFeedback");
+    if (!registerForm || !profileSummary) return;
+
+    if (profile) {
+      registerForm.classList.add("d-none");
+      profileSummary.classList.remove("d-none");
+      const profileFields = {
+        nombre: $("summaryNombre"),
+        apellido: $("summaryApellido"),
+        telefono: $("summaryTelefono"),
+        email: $("summaryEmail"),
+        documento: $("summaryDocumento"),
+        pais: $("summaryPais"),
+        provincia: $("summaryProvincia"),
+        localidad: $("summaryLocalidad"),
+        direccion: $("summaryDireccion"),
+      };
+      Object.entries(profileFields).forEach(([key, element]) => {
+        if (element) element.textContent = profile[key] || "-";
+      });
+      if (registerFeedback) registerFeedback.classList.add("d-none");
+    } else {
+      registerForm.classList.remove("d-none");
+      profileSummary.classList.add("d-none");
+      registerForm.reset();
+    }
+  };
+
+  const fillFormFromProfile = (profile) => {
+    if (!profile) return;
+    const fieldMap = {
+      registerNombre: "nombre",
+      registerApellido: "apellido",
+      registerTelefono: "telefono",
+      registerEmail: "email",
+      registerDocumento: "documento",
+      registerPais: "pais",
+      registerLocalidad: "localidad",
+      registerDireccion: "direccion",
+    };
+    Object.entries(fieldMap).forEach(([fieldId, profileKey]) => {
+      const field = $(fieldId);
+      if (field) field.value = profile[profileKey] || "";
+    });
+    const provinceInput = $("registerProvincia");
+    const provinceButtonText = $("provinceSelectedText");
+    if (provinceInput) provinceInput.value = profile.provincia || "";
+    if (provinceButtonText) provinceButtonText.textContent = profile.provincia || "Seleccioná tu provincia";
+  };
+
+  const form = $("contactForm");
+  const nombre = $("nombre");
+  const email = $("email");
+  const mensaje = $("mensaje");
+  const feedback = $("form-feedback");
 
   if (form && nombre && email && mensaje && feedback) {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-
       if (!nombre.value.trim() || !email.value.trim() || !mensaje.value.trim()) {
         feedback.textContent = "Completá todos los campos.";
         return;
       }
-
       if (!email.value.includes("@")) {
         feedback.textContent = "Ingresá un email válido.";
         return;
       }
-
       feedback.textContent = "Gracias, nos contactaremos pronto.";
       form.reset();
     });
   }
 
-  const cartCountSummary = document.getElementById("cart-count-summary");
-  const cartItemsElement = document.getElementById("cart-items");
-  const cartSubtotalElement = document.getElementById("cart-subtotal");
-  const cartShippingElement = document.getElementById("cart-shipping");
-  const cartTotalElement = document.getElementById("cart-total");
-  const clearCartButton = document.getElementById("clear-cart");
-  const checkoutButton = document.getElementById("checkout-button");
-  const cartFeedback = document.getElementById("cart-feedback");
+  const registerForm = $("registerForm");
+  const registerFeedback = $("registerFeedback");
+  const editProfileButton = $("editProfileButton");
+  const logoutProfileButton = $("logoutProfileButton");
+  const registerModal = $("registerModal");
+  const provinceToggle = $("provinceToggle");
+  const provinceMenu = $("provinceMenu");
+  const provinceInput = $("registerProvincia");
+  const provinceSelectedText = $("provinceSelectedText");
+
+  const syncProvinceSelection = (value) => {
+    if (!provinceInput || !provinceSelectedText) return;
+    provinceInput.value = value || "";
+    provinceSelectedText.textContent = value || "Seleccioná tu provincia";
+    if (provinceToggle) provinceToggle.setAttribute("aria-expanded", "false");
+    if (provinceMenu) provinceMenu.classList.add("d-none");
+  };
+
+  if (provinceToggle && provinceMenu) {
+    provinceToggle.addEventListener("click", () => {
+      const isOpen = !provinceMenu.classList.contains("d-none");
+      provinceMenu.classList.toggle("d-none", isOpen);
+      provinceToggle.setAttribute("aria-expanded", String(!isOpen));
+    });
+
+    provinceMenu.addEventListener("click", (event) => {
+      const option = event.target.closest(".province-option");
+      if (!option) return;
+      syncProvinceSelection(option.dataset.value || "");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!provinceToggle || !provinceMenu) return;
+      if (!provinceToggle.contains(event.target) && !provinceMenu.contains(event.target)) {
+        provinceMenu.classList.add("d-none");
+        provinceToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+  }
+
+  if (registerForm && registerFeedback) {
+    registerForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const requiredFields = [
+        $("registerNombre"), $("registerApellido"), $("registerTelefono"), $("registerEmail"),
+        $("registerDocumento"), $("registerPais"), $("registerProvincia"), $("registerLocalidad"), $("registerDireccion")
+      ];
+
+      requiredFields.forEach((field) => {
+        if (field) field.classList.remove("input-invalid");
+      });
+
+      const hasEmptyField = requiredFields.some((field) => !hasValue(field));
+      const emailField = $("registerEmail");
+
+      if (hasEmptyField) {
+        requiredFields.forEach((field) => {
+          if (field && !hasValue(field)) field.classList.add("input-invalid");
+        });
+        registerFeedback.textContent = "Falta completar esos campos.";
+        registerFeedback.classList.remove("d-none", "alert-success");
+        registerFeedback.classList.add("alert-danger");
+        return;
+      }
+
+      if (emailField && !emailField.value.includes("@")) {
+        emailField.classList.add("input-invalid");
+        registerFeedback.textContent = "Ingresá un email válido.";
+        registerFeedback.classList.remove("d-none", "alert-danger");
+        registerFeedback.classList.add("alert-success");
+        return;
+      }
+
+      const profile = {
+        nombre: $("registerNombre").value.trim(),
+        apellido: $("registerApellido").value.trim(),
+        telefono: $("registerTelefono").value.trim(),
+        email: $("registerEmail").value.trim(),
+        documento: $("registerDocumento").value.trim(),
+        pais: $("registerPais").value.trim(),
+        provincia: $("registerProvincia").value.trim(),
+        localidad: $("registerLocalidad").value.trim(),
+        direccion: $("registerDireccion").value.trim(),
+      };
+
+      saveProfile(profile);
+      registerFeedback.textContent = `Datos guardados correctamente. Cliente ${profile.nombre} ${profile.apellido} registrado.`;
+      registerFeedback.classList.remove("d-none", "alert-danger");
+      registerFeedback.classList.add("alert-success");
+      renderProfileState();
+      showProfileAddress();
+      updateCart();
+    });
+  }
+
+  if (editProfileButton) {
+    editProfileButton.addEventListener("click", () => {
+      const profile = getSavedProfile();
+      fillFormFromProfile(profile);
+      renderProfileState();
+      registerForm.classList.remove("d-none");
+      const summary = $("profileSummary");
+      if (summary) summary.classList.add("d-none");
+      registerForm.querySelector("button[type='submit']").textContent = "Guardar cambios";
+    });
+  }
+
+  if (logoutProfileButton) {
+    logoutProfileButton.addEventListener("click", () => {
+      removeProfile();
+      renderProfileState();
+      updateCart();
+    });
+  }
+
+  if (registerModal) {
+    registerModal.addEventListener("show.bs.modal", () => {
+      renderProfileState();
+      updateCart();
+    });
+  }
+
+  const cartCountSummary = $("cart-count-summary");
+  const cartItemsElement = $("cart-items");
+  const cartSubtotalElement = $("cart-subtotal");
+  const cartShippingElement = $("cart-shipping");
+  const cartTotalElement = $("cart-total");
+  const clearCartButton = $("clear-cart");
+  const checkoutButton = $("checkout-button");
+  const cartFeedback = $("cart-feedback");
   const cards = Array.from(document.querySelectorAll("#productos .card"));
   const formatPrice = (value) => value.toLocaleString("es-AR");
   let cart = {};
@@ -47,10 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateCart = () => {
     const selectedProducts = products.filter((product) => cart[product.id]);
     const quantityTotal = selectedProducts.reduce((total, product) => total + cart[product.id], 0);
-    const subtotal = selectedProducts.reduce(
-      (total, product) => total + product.price * cart[product.id],
-      0,
-    );
+    const subtotal = selectedProducts.reduce((total, product) => total + product.price * cart[product.id], 0);
     const shipping = subtotal === 0 || subtotal >= 150000 ? 0 : 8000;
     const total = subtotal + shipping;
 
@@ -62,10 +258,22 @@ document.addEventListener("DOMContentLoaded", () => {
     cartSubtotalElement.textContent = formatPrice(subtotal);
     cartShippingElement.textContent = shipping ? `$${formatPrice(shipping)}` : "Gratis";
     cartTotalElement.textContent = formatPrice(total);
-    checkoutButton.disabled = quantityTotal === 0;
+
+    const hasProfile = Boolean(getSavedProfile());
+    checkoutButton.disabled = quantityTotal === 0 || !hasProfile;
     clearCartButton.disabled = quantityTotal === 0;
 
-    if (selectedProducts.length === 0) {
+    if (!hasProfile) {
+      cartFeedback.textContent = "Necesitás crear un perfil antes de finalizar la compra.";
+    } else if (quantityTotal === 0) {
+      cartFeedback.textContent = "Agregá productos para continuar.";
+    } else {
+      cartFeedback.textContent = "Perfil listo para completar la compra.";
+    }
+
+    showProfileAddress();
+
+    if (!selectedProducts.length) {
       cartItemsElement.innerHTML = '<p class="cart-empty mb-0">Todavía no agregaste productos.</p>';
       return;
     }
@@ -86,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
               </div>
             </div>
             <strong class="cart-item-total">$${formatPrice(product.price * cart[product.id])}</strong>
-          </div>`,
+          </div>`
       )
       .join("");
   };
@@ -98,13 +306,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const changeQuantity = (change) => {
       const currentQuantity = cart[String(index)] || 0;
       const nextQuantity = Math.max(0, Math.min(10, currentQuantity + change));
-
-      if (nextQuantity === 0) {
-        delete cart[String(index)];
-      } else {
-        cart[String(index)] = nextQuantity;
-      }
-
+      if (nextQuantity === 0) delete cart[String(index)];
+      else cart[String(index)] = nextQuantity;
       updateCart();
     };
 
@@ -115,7 +318,6 @@ document.addEventListener("DOMContentLoaded", () => {
   cartItemsElement.addEventListener("click", (event) => {
     const button = event.target.closest("button[data-action]");
     if (!button) return;
-
     const productId = button.dataset.id;
     if (button.dataset.action === "remove") {
       delete cart[productId];
@@ -125,7 +327,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (nextQuantity === 0) delete cart[productId];
       else cart[productId] = nextQuantity;
     }
-
     updateCart();
   });
 
@@ -136,8 +337,25 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   checkoutButton.addEventListener("click", () => {
-    cartFeedback.textContent = "¡Listo! Tu pedido fue preparado para finalizar la compra.";
+    const savedProfile = getSavedProfile();
+    if (!savedProfile || !savedProfile.direccion) {
+      cartFeedback.textContent = "Necesitás crear un perfil antes de finalizar la compra.";
+      return;
+    }
+
+    const deliveryAddress = [savedProfile.direccion, savedProfile.localidad, savedProfile.provincia, savedProfile.pais].filter(Boolean).join(", ");
+    const previousCartMessage = cartFeedback.textContent;
+    cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
+    cart = {};
+    updateCart();
+    cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
+
+    if (previousCartMessage === "El carrito quedó vacío." || previousCartMessage === "Agregá productos para continuar.") {
+      cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
+    }
   });
 
+  renderProfileState();
+  showProfileAddress();
   updateCart();
 });

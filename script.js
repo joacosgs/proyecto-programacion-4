@@ -3,6 +3,119 @@ document.addEventListener("DOMContentLoaded", () => {
   const $ = (id) => document.getElementById(id);
   const hasValue = (field) => !!field && field.value.trim() !== "";
 
+  const sucursalesPorProvincia = {
+    Tucumán: [
+      {
+        nombre: "Sporting Tucumán Centro",
+        direccion: "Idelfonso de las Muñecas 155, San Miguel de Tucumán, Tucumán, Argentina",
+      },
+      {
+        nombre: "Sporting Outlet",
+        direccion: "Avenida Siria 2345, San Miguel de Tucumán, Tucumán, Argentina",
+      }
+    ],
+    Salta: [
+      {
+        nombre: "Sporting Salta",
+        direccion: "Avenida Belgrano 890, Salta, Argentina",
+      },
+      {
+        nombre: "Sporting Barrio San Martín",
+        direccion: "San Martín 220, Salta, Argentina",
+      }
+    ],
+    Jujuy: [
+      {
+        nombre: "Sporting Jujuy",
+        direccion: "Avenida Sarmiento 700, San Salvador de Jujuy, Jujuy, Argentina",
+      }
+    ],
+    Mendoza: [
+      {
+        nombre: "Sporting Mendoza",
+        direccion: "Avenida San Martín 1230, Mendoza, Argentina",
+      },
+      {
+        nombre: "Sporting Godoy Cruz",
+        direccion: "Avenida Colón 980, Godoy Cruz, Mendoza, Argentina",
+      }
+    ],
+    "Santiago del Estero": [
+      {
+        nombre: "Sporting Santiago del Estero",
+        direccion: "Avenida Belgrano 1450, Santiago del Estero, Argentina",
+      }
+    ],
+    "Buenos Aires": [
+      {
+        nombre: "Sporting Buenos Aires",
+        direccion: "Avenida Corrientes 2345, CABA, Argentina",
+      },
+      {
+        nombre: "Sporting La Plata",
+        direccion: "Calle 7 320, La Plata, Buenos Aires, Argentina",
+      }
+    ]
+  };
+
+  const centroProvincia = {
+    Tucumán: "San Miguel de Tucumán, Tucumán, Argentina",
+    Salta: "Salta, Argentina",
+    Jujuy: "San Salvador de Jujuy, Jujuy, Argentina",
+    Mendoza: "Mendoza, Argentina",
+    "Santiago del Estero": "Santiago del Estero, Argentina",
+    "Buenos Aires": "Buenos Aires, Argentina"
+  };
+
+  const actualizarMapa = (direccion, provincia = "") => {
+    const mapa = document.getElementById("mapa-google");
+    if (!mapa) return;
+
+    const query = direccion || centroProvincia[provincia] || provincia || "Argentina";
+    mapa.src = `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+  };
+
+  const cargarProvincia = (provincia) => {
+    const sucursales = provincia ? sucursalesPorProvincia[provincia] || [] : [];
+    const lista = document.getElementById("sucursales-lista");
+    const botones = document.querySelectorAll(".tienda-fisica-btn");
+
+    botones.forEach((boton) => {
+      boton.classList.toggle("active", boton.dataset.provincia === provincia);
+    });
+
+    if (!lista) return;
+
+    if (!provincia) {
+      lista.innerHTML = "";
+      actualizarMapa("Argentina");
+      return;
+    }
+
+    lista.innerHTML = sucursales
+      .map((sucursal) => {
+        const calle = sucursal.direccion.split(",")[0];
+        return `
+          <button type="button" class="sucursal-item" data-direccion="${sucursal.direccion}">
+            ${sucursal.nombre}
+            <span class="sucursal-calle">Calle: ${calle}</span>
+            <small>${sucursal.direccion}</small>
+          </button>
+        `;
+      })
+      .join("");
+
+    if (sucursales.length > 0) {
+      actualizarMapa(centroProvincia[provincia] || sucursales[0].direccion, provincia);
+    }
+
+    lista.querySelectorAll(".sucursal-item").forEach((boton) => {
+      boton.addEventListener("click", () => {
+        actualizarMapa(boton.dataset.direccion, provincia);
+      });
+    });
+  };
+
   const getSavedProfile = () => {
     try {
       return JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
@@ -78,6 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (provinceInput) provinceInput.value = profile.provincia || "";
     if (provinceButtonText) provinceButtonText.textContent = profile.provincia || "Seleccioná tu provincia";
   };
+
+  document.querySelectorAll(".tienda-fisica-btn").forEach((boton) => {
+    boton.addEventListener("click", () => {
+      cargarProvincia(boton.dataset.provincia);
+    });
+  });
+
+  cargarProvincia("");
 
   const form = $("contactForm");
   const nombre = $("nombre");

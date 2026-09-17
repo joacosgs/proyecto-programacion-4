@@ -136,6 +136,10 @@ body,
   width: 100%
 }
 
+#registerForm .row>[class*="col-"] {
+  width: 100%
+}
+
 main {
   font-family: var(--main-font);
   background: transparent
@@ -165,7 +169,8 @@ section {
 
 .card {
   background: var(--primary-color);
-  color: #fff
+  color: #fff;
+  height: 100%;
 }
 
 .card-title {
@@ -178,6 +183,22 @@ section {
   border-color: rgba(255, 255, 255, .35)
 }
 
+#nosotros .row > [class*="col-"] {
+  display: flex;
+}
+
+#nosotros .card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#nosotros .card-body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 #productos .card {
   background: #fff;
   color: #000;
@@ -188,6 +209,94 @@ section {
 #productos .card-img-top {
   height: 320px;
   object-fit: contain
+}
+
+.tienda-fisica-lista {
+  display: grid;
+  gap: .5rem;
+}
+
+.tienda-fisica-btn {
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 10px;
+  padding: .6rem .8rem;
+  font-weight: 700;
+  color: #1f1f1f;
+  transition: all .2s ease;
+}
+
+.tienda-fisica-btn:hover,
+.tienda-fisica-btn:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(34, 177, 64, 0.12);
+  outline: none;
+}
+
+.tienda-fisica-btn.active {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+}
+
+.tienda-mapa-wrap {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 1rem;
+  align-items: start;
+  background: rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(34, 179, 72, 0.2);
+  border-radius: 18px;
+  padding: 1rem;
+  box-shadow: 0 .75rem 1.5rem rgba(0, 0, 0, .08);
+}
+
+.sucursales-lista {
+  display: grid;
+  gap: .5rem;
+}
+
+.sucursal-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid rgba(34, 179, 72, 0.25);
+  border-radius: 10px;
+  padding: .7rem .8rem;
+  color: #1f1f1f;
+  font-weight: 600;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.sucursal-item small {
+  display: block;
+  color: #4a4a4a;
+  margin-top: .25rem;
+}
+
+.sucursal-calle {
+  display: block;
+  margin-top: .2rem;
+  font-weight: 700;
+  color: #1b8a35;
+}
+
+.mapa-google-embed {
+  width: 100%;
+  min-height: 260px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .12);
+}
+
+@media (max-width: 991.98px) {
+  .tienda-mapa-wrap {
+    grid-template-columns: 1fr;
+  }
 }
 
 #productos .card-body {

@@ -72,6 +72,9 @@
             <a class="nav-link text-white" href="#nosotros">Nosotros</a>
             <a class="nav-link text-white" href="#productos">Productos</a>
             <a class="nav-link text-white" href="#contacto">Contacto</a>
+            <a class="nav-link cart-nav-link text-white" href="#carrito" aria-label="Ver carrito">
+              <img src="img/carritosinfondo.png" alt="Ver carrito" class="cart-logo" />
+            </a>
           </div>
         </div>
       </div>
@@ -233,10 +236,30 @@
               </div>
             </div>
           </div>
-          <div class="cart-total text-center mt-5">
-            <h3>🛒 Resumen del carrito:</h3>
-            <p class="cart-products">Productos: <span id="cart-count-summary">0</span></p>
-            <p class="cart-price">Total: $<span id="cart-total">0</span></p>
+          <div id="carrito" class="cart-total mt-5">
+            <div class="cart-heading">
+              <div>
+                <p class="cart-kicker mb-1">Tu selección</p>
+                <h3 class="mb-0">Carrito de compras</h3>
+              </div>
+              <span class="cart-products"><span id="cart-count-summary">0</span> productos</span>
+            </div>
+
+            <div id="cart-items" class="cart-items" aria-live="polite">
+              <p class="cart-empty mb-0">Todavía no agregaste productos.</p>
+            </div>
+
+            <div class="cart-summary">
+              <div><span>Subtotal</span><strong>$<span id="cart-subtotal">0</span></strong></div>
+              <div><span>Envío</span><strong id="cart-shipping">Gratis</strong></div>
+              <div class="cart-grand-total"><span>Total</span><strong>$<span id="cart-total">0</span></strong></div>
+            </div>
+
+            <div class="cart-actions">
+              <button id="clear-cart" type="button" class="btn btn-outline-secondary">Vaciar carrito</button>
+              <button id="checkout-button" type="button" class="btn btn-primary-sporting" disabled>Finalizar compra</button>
+            </div>
+            <p id="cart-feedback" class="cart-feedback mb-0" role="status"></p>
           </div>
         </div>
       </section>

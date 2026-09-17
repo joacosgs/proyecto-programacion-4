@@ -1,5 +1,7 @@
 # Sporting
 
+Sporting es una landing page de indumentaria, calzado y accesorios deportivos con un ecommerce de estilo comercial, carrito interactivo y flujo de registro de cliente del lado del navegador.
+
 ## Integrantes
 
 - Joaquin Bernardo
@@ -7,76 +9,80 @@
 - Santiago Juarez
 - Santiago Acosta
 
-## Descripción
+## Descripción del proyecto
 
-Sporting es una página web de venta de ropa, zapatillas y accesorios deportivos.
+La página incluye una navegación principal, una sección de bienvenida, catálogo de productos, carrito de compras, formulario de contacto y un sistema de perfil de usuario sin base de datos.
+
+Las funcionalidades actuales suman una experiencia de compra más completa:
+
+- perfil de usuario con registro local en `localStorage`
+- formulario de creación de cuenta con validación visual
+- selección de provincia desde un menú desplegable
+- carga de localidad y dirección para envío
+- reutilización automática de la dirección en el carrito
+- bloqueo de compra si no existe un perfil creado
+- edición y cierre de sesión del usuario
+- resumen del perfil visible luego de guardar la información
 
 ## Tecnologías utilizadas
 
-- HTML
-- CSS
+- HTML5
+- CSS3
 - Bootstrap 5
 - JavaScript
-- DOM y eventos
+- DOM
+- almacenamiento local con `localStorage`
+- Google Fonts
 - Git y GitHub
 
-## Cómo está hecha la página
+## Características principales
 
-- Usamos Bootstrap 5 para organizar la página y hacerla adaptable a distintos tamaños de pantalla.
-- La barra de navegación usa las clases de Bootstrap para que el menú se adapte en celulares.
-- La sección "Nosotros" está formada por tres tarjetas Bootstrap.
-- La sección "Productos" muestra tres tarjetas Bootstrap con imágenes, títulos y descripciones.
-- Las tarjetas de productos tienen borde verde, fondo blanco y una sombra para destacarse.
-- El formulario de contacto usa filas y columnas de Bootstrap para acomodarse en computadoras, tabletas y celulares.
-- Se incorporó validación del formulario con JavaScript: se valida que los campos no estén vacíos y que el email contenga el símbolo `@`.
-- Se incorporó una pequeña interacción de productos con botones `+` y `−` para aumentar o disminuir la cantidad y un contador del carrito visible en la barra de navegación.
-- Usamos CSS propio para los colores, las fuentes, los fondos y los detalles visuales.
-- La imagen `fondotodocompu.png` se usa en computadoras y tabletas, mientras que `fondotodocelu.png` se usa en celulares.
-- Usamos las fuentes Roboto para el texto general y Oswald para los títulos.
+- Navbar con logo de la marca, carrito y botón de perfil.
+- Tarjetas de productos con precio y controles de cantidad.
+- Carrito con subtotal, envío, total y lista de productos seleccionados.
+- Validación del formulario de contacto.
+- Registro de cliente con nombre, apellido, teléfono, email, documento, país, provincia, localidad, dirección.
+- Menú desplegable de provincias para Argentina.
+- Guardado persistente del perfil en el navegador.
+- Mostrar la dirección del cliente en el carrito y al confirmar compra.
+- Confirmación de compra con mensaje personalizado.
+- Carrito se limpia luego de finalizar una compra.
+- Modal de perfil con estado alternado entre formulario y resumen guardado.
+- Botones para editar información y cerrar sesión.
+- Resaltado rojo en campos incompletos durante la validación.
+- Diseño responsive para mobile y desktop.
 
-## Etiquetas SEO utilizadas
+## Funcionalidades JavaScript actuales
 
-En la página usamos las siguientes etiquetas para ayudar a los buscadores y mejorar la vista previa al compartir el sitio en redes:
+El archivo `script.js` maneja:
 
-1. `<title>`: muestra el título de la página en la pestaña del navegador y en los resultados de búsqueda.
-2. `description`: explica brevemente de qué trata Sporting.
-3. `author`: indica el autor o responsable de la página.
-4. `keywords`: incluye palabras relacionadas con productos deportivos.
-5. `robots`: indica a los buscadores que pueden registrar la página y seguir sus enlaces.
-6. `og:title`: define el título que se muestra al compartir el enlace en redes sociales.
-7. `og:description`: define la descripción que acompaña al enlace compartido.
-8. `og:type`: indica que el contenido compartido es un sitio web.
-9. `og:image`: define la imagen que se muestra al compartir el sitio.
-10. `twitter:card`: define el formato de la vista previa al compartir en X/Twitter.
+1. creación y lectura del perfil del cliente usando `localStorage`
+2. validación de campos obligatorios del registro
+3. control del menú de provincias
+4. renderizado del resumen del perfil guardado
+5. actualización del carrito al crear o cerrar sesión
+6. bloqueo del botón de finalizar compra si no hay perfil
+7. confirmación de compra y limpieza del carrito
+8. validación del formulario de contacto
+9. mensajes visuales de feedback al usuario
 
-## Flexbox
+## Estructura principal
 
-Usamos Flexbox en el header para acomodar el nombre de la página y el menú. También lo usamos en contacto y en los enlaces del footer.
+- `index.html`: estructura completa del sitio y modal de perfil
+- `style.css`: estilos, tema verde, responsive y componentes personalizados
+- `script.js`: lógica de producto, carrito, validación y perfil de usuario
+- `img/`: imágenes, logos y fondos del proyecto
 
-## Grid
+## Estado actual
 
-Usamos el sistema de filas y columnas de Bootstrap en la parte de productos para mostrar las tres tarjetas una al lado de la otra en pantallas grandes y una debajo de otra en celulares.
+El proyecto se encuentra en una versión funcional de ecommerce comercial con perfil de usuario, almacenamiento local, validación visual y flujo de compra completo del lado del cliente.
 
-## Variables CSS
+## Cómo ejecutar el proyecto
 
-Creamos variables para guardar colores, fuentes, espacios y bordes. Por ejemplo:
+1. Clonar este repositorio.
+2. Abrir la carpeta del proyecto.
+3. Ejecutar `index.html` en el navegador, o usar Live Server desde el editor.
 
-- `--primary-color`
-- `--main-font`
-- `--spacing-medium`
-- `--border-radius`
+## Nota
 
-## Interacción JavaScript y DOM
-
-La página incorpora una pequeña capa de interactividad con JavaScript usando el DOM y eventos:
-
-1. Validación del formulario de contacto.
-2. Mensaje de feedback visual para el usuario.
-3. Contador de carrito visible en la barra de navegación.
-4. Botones `+` y `−` en cada tarjeta de producto para aumentar o disminuir la cantidad seleccionada.
-5. Cálculo automático del total del carrito según los productos seleccionados.
-6. Resumen visual del carrito con la cantidad de productos y el precio total.
-
-## Responsive Design
-
-La página se adapta a computadoras, tabletas y celulares. En pantallas chicas, los productos quedan uno debajo del otro, el menú se contrae y se utiliza un fondo vertical para que la imagen se vea mejor.
+La aplicación no usa una base de datos real; el registro del usuario y la dirección de envío se guardan localmente en el navegador para simular un flujo de compra real sin backend.

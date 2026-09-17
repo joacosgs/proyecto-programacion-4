@@ -85,14 +85,14 @@
             <div class="card h-100 shadow-sm">
               <div class="card-body">
                 <h3 class="card-title h5 fw-bold">Tiendas físicas</h3>
-                <p class="card-text">Contamos con tiendas físicas donde podés encontrar nuestros productos y recibir
-                  atención personalizada.</p>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">Tucumán</li>
-                  <li class="list-group-item">Santiago del Estero</li>
-                  <li class="list-group-item">Jujuy</li>
-                  <li class="list-group-item">Salta</li>
-                </ul>
+                <div class="tienda-fisica-lista mt-3">
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Tucumán">Tucumán</button>
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Salta">Salta</button>
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Jujuy">Jujuy</button>
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Mendoza">Mendoza</button>
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Santiago del Estero">Santiago del Estero</button>
+                  <button type="button" class="tienda-fisica-btn" data-provincia="Buenos Aires">Buenos Aires</button>
+                </div>
               </div>
             </div>
           </div>
@@ -111,6 +111,17 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tiendas-mapa" class="py-4">
+      <div class="container">
+        <div class="tienda-mapa-wrap">
+          <div id="sucursales-lista" class="sucursales-lista"></div>
+          <iframe id="mapa-google" class="mapa-google-embed" loading="lazy" allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=San%20Miguel%20de%20Tucum%C3%A1n%20Argentina&output=embed"></iframe>
         </div>
       </div>
     </section>

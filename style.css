@@ -276,6 +276,8 @@ section {
   display: block;
   color: #4a4a4a;
   margin-top: .25rem;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
 .sucursal-calle {
@@ -283,6 +285,14 @@ section {
   margin-top: .2rem;
   font-weight: 700;
   color: #1b8a35;
+}
+
+.sucursal-horario {
+  display: block;
+  margin-top: .3rem;
+  color: #1b8a35;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .mapa-google-embed {

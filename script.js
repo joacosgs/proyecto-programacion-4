@@ -1,7 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
   const STORAGE_KEY = "sportingUserProfile";
+  const HORARIO_SUCURSAL = "Lunes a sábado, 09:00 a 20:00";
   const $ = (id) => document.getElementById(id);
   const hasValue = (field) => !!field && field.value.trim() !== "";
+  const getProfileAddress = (profile) => [profile?.direccion, profile?.localidad, profile?.provincia, profile?.pais]
+    .filter(Boolean)
+    .join(", ");
+  const profileFieldMap = {
+    registerNombre: "nombre",
+    registerApellido: "apellido",
+    registerTelefono: "telefono",
+    registerEmail: "email",
+    registerDocumento: "documento",
+    registerPais: "pais",
+    registerProvincia: "provincia",
+    registerLocalidad: "localidad",
+    registerDireccion: "direccion",
+  };
 
   const sucursalesPorProvincia = {
     Tucumán: [
@@ -78,6 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const cargarProvincia = (provincia) => {
     const sucursales = provincia ? sucursalesPorProvincia[provincia] || [] : [];
     const lista = document.getElementById("sucursales-lista");
+    const mapa = document.getElementById("mapa-google");
+    const mapaWrap = lista?.parentElement;
     const botones = document.querySelectorAll(".tienda-fisica-btn");
 
     botones.forEach((boton) => {
@@ -88,17 +105,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!provincia) {
       lista.innerHTML = "";
+      mapaWrap?.setAttribute("hidden", "");
+      mapa?.setAttribute("hidden", "");
       actualizarMapa("Argentina");
       return;
     }
 
+    mapaWrap?.removeAttribute("hidden");
+    mapa?.removeAttribute("hidden");
+
     lista.innerHTML = sucursales
       .map((sucursal) => {
-        const calle = sucursal.direccion.split(",")[0];
         return `
           <button type="button" class="sucursal-item" data-direccion="${sucursal.direccion}">
             ${sucursal.nombre}
-            <span class="sucursal-calle">Calle: ${calle}</span>
+            <span class="sucursal-horario">Horario: ${HORARIO_SUCURSAL}</span>
             <small>${sucursal.direccion}</small>
           </button>
         `;
@@ -135,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       profileAddress.textContent = "Todavía no creaste un perfil.";
       return;
     }
-    profileAddress.textContent = [profile.direccion, profile.localidad, profile.provincia, profile.pais].filter(Boolean).join(", ");
+    profileAddress.textContent = getProfileAddress(profile);
   };
 
   const renderProfileState = () => {
@@ -172,17 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const fillFormFromProfile = (profile) => {
     if (!profile) return;
-    const fieldMap = {
-      registerNombre: "nombre",
-      registerApellido: "apellido",
-      registerTelefono: "telefono",
-      registerEmail: "email",
-      registerDocumento: "documento",
-      registerPais: "pais",
-      registerLocalidad: "localidad",
-      registerDireccion: "direccion",
-    };
-    Object.entries(fieldMap).forEach(([fieldId, profileKey]) => {
+    Object.entries(profileFieldMap).forEach(([fieldId, profileKey]) => {
+      if (fieldId === "registerProvincia") return;
       const field = $(fieldId);
       if (field) field.value = profile[profileKey] || "";
     });
@@ -194,7 +206,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.querySelectorAll(".tienda-fisica-btn").forEach((boton) => {
     boton.addEventListener("click", () => {
-      cargarProvincia(boton.dataset.provincia);
+      const mismaProvincia = boton.classList.contains("active");
+      cargarProvincia(mismaProvincia ? "" : boton.dataset.provincia);
     });
   });
 
@@ -265,10 +278,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (registerForm && registerFeedback) {
     registerForm.addEventListener("submit", (event) => {
       event.preventDefault();
-      const requiredFields = [
-        $("registerNombre"), $("registerApellido"), $("registerTelefono"), $("registerEmail"),
-        $("registerDocumento"), $("registerPais"), $("registerProvincia"), $("registerLocalidad"), $("registerDireccion")
-      ];
+      const requiredFields = Object.keys(profileFieldMap).map($);
 
       requiredFields.forEach((field) => {
         if (field) field.classList.remove("input-invalid");
@@ -295,17 +305,9 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const profile = {
-        nombre: $("registerNombre").value.trim(),
-        apellido: $("registerApellido").value.trim(),
-        telefono: $("registerTelefono").value.trim(),
-        email: $("registerEmail").value.trim(),
-        documento: $("registerDocumento").value.trim(),
-        pais: $("registerPais").value.trim(),
-        provincia: $("registerProvincia").value.trim(),
-        localidad: $("registerLocalidad").value.trim(),
-        direccion: $("registerDireccion").value.trim(),
-      };
+      const profile = Object.fromEntries(
+        Object.entries(profileFieldMap).map(([fieldId, profileKey]) => [profileKey, $(fieldId).value.trim()])
+      );
 
       saveProfile(profile);
       registerFeedback.textContent = `Datos guardados correctamente. Cliente ${profile.nombre} ${profile.apellido} registrado.`;
@@ -420,20 +422,19 @@ document.addEventListener("DOMContentLoaded", () => {
       .join("");
   };
 
+  const changeQuantity = (productId, change) => {
+    const nextQuantity = Math.max(0, Math.min(10, (cart[productId] || 0) + change));
+    if (nextQuantity) cart[productId] = nextQuantity;
+    else delete cart[productId];
+    updateCart();
+  };
+
   cards.forEach((card, index) => {
     const minus = card.querySelector(".minus");
     const plus = card.querySelector(".plus");
 
-    const changeQuantity = (change) => {
-      const currentQuantity = cart[String(index)] || 0;
-      const nextQuantity = Math.max(0, Math.min(10, currentQuantity + change));
-      if (nextQuantity === 0) delete cart[String(index)];
-      else cart[String(index)] = nextQuantity;
-      updateCart();
-    };
-
-    plus.addEventListener("click", () => changeQuantity(1));
-    minus.addEventListener("click", () => changeQuantity(-1));
+    plus.addEventListener("click", () => changeQuantity(String(index), 1));
+    minus.addEventListener("click", () => changeQuantity(String(index), -1));
   });
 
   cartItemsElement.addEventListener("click", (event) => {
@@ -443,10 +444,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (button.dataset.action === "remove") {
       delete cart[productId];
     } else {
-      const change = button.dataset.action === "increase" ? 1 : -1;
-      const nextQuantity = Math.max(0, Math.min(10, (cart[productId] || 0) + change));
-      if (nextQuantity === 0) delete cart[productId];
-      else cart[productId] = nextQuantity;
+      changeQuantity(productId, button.dataset.action === "increase" ? 1 : -1);
+      return;
     }
     updateCart();
   });
@@ -464,16 +463,11 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const deliveryAddress = [savedProfile.direccion, savedProfile.localidad, savedProfile.provincia, savedProfile.pais].filter(Boolean).join(", ");
-    const previousCartMessage = cartFeedback.textContent;
+    const deliveryAddress = getProfileAddress(savedProfile);
     cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
     cart = {};
     updateCart();
     cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
-
-    if (previousCartMessage === "El carrito quedó vacío." || previousCartMessage === "Agregá productos para continuar.") {
-      cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
-    }
   });
 
   renderProfileState();

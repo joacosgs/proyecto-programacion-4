@@ -85,6 +85,7 @@
             <div class="card h-100 shadow-sm">
               <div class="card-body">
                 <h3 class="card-title h5 fw-bold">Tiendas físicas</h3>
+                <p class="card-text">Selecciona tu provincia para ver horario y direccion.</p>
                 <div class="tienda-fisica-lista mt-3">
                   <button type="button" class="tienda-fisica-btn" data-provincia="Tucumán">Tucumán</button>
                   <button type="button" class="tienda-fisica-btn" data-provincia="Salta">Salta</button>
@@ -117,7 +118,7 @@
 
     <section id="tiendas-mapa" class="py-4">
       <div class="container">
-        <div class="tienda-mapa-wrap">
+        <div class="tienda-mapa-wrap" hidden>
           <div id="sucursales-lista" class="sucursales-lista"></div>
           <iframe id="mapa-google" class="mapa-google-embed" loading="lazy" allowfullscreen
             referrerpolicy="no-referrer-when-downgrade"

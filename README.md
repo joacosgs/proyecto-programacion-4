@@ -18,6 +18,8 @@ Las funcionalidades actuales suman una experiencia de compra más completa:
 - perfil de usuario con registro local en `localStorage`
 - formulario de creación de cuenta con validación visual
 - selección de provincia desde un menú desplegable
+- consulta de sucursales físicas por provincia
+- visualización de horarios, direcciones y mapa de cada provincia
 - carga de localidad y dirección para envío
 - reutilización automática de la dirección en el carrito
 - bloqueo de compra si no existe un perfil creado
@@ -43,6 +45,9 @@ Las funcionalidades actuales suman una experiencia de compra más completa:
 - Validación del formulario de contacto.
 - Registro de cliente con nombre, apellido, teléfono, email, documento, país, provincia, localidad, dirección.
 - Menú desplegable de provincias para Argentina.
+- Tarjetas de tiendas físicas con horarios y direcciones por provincia.
+- Mapa de Google que aparece al seleccionar una provincia y se actualiza al elegir una sucursal.
+- Ocultamiento de las ubicaciones y el mapa al volver a seleccionar la provincia activa.
 - Guardado persistente del perfil en el navegador.
 - Mostrar la dirección del cliente en el carrito y al confirmar compra.
 - Confirmación de compra con mensaje personalizado.
@@ -58,13 +63,14 @@ El archivo `script.js` maneja:
 
 1. creación y lectura del perfil del cliente usando `localStorage`
 2. validación de campos obligatorios del registro
-3. control del menú de provincias
-4. renderizado del resumen del perfil guardado
-5. actualización del carrito al crear o cerrar sesión
-6. bloqueo del botón de finalizar compra si no hay perfil
-7. confirmación de compra y limpieza del carrito
-8. validación del formulario de contacto
-9. mensajes visuales de feedback al usuario
+3. selección de provincias y renderizado de sucursales
+4. actualización del mapa según la provincia o sucursal elegida
+5. renderizado del resumen del perfil guardado
+6. actualización del carrito al crear o cerrar sesión
+7. bloqueo del botón de finalizar compra si no hay perfil
+8. confirmación de compra y limpieza del carrito
+9. validación del formulario de contacto
+10. mensajes visuales de feedback al usuario
 
 ## Estructura principal
 

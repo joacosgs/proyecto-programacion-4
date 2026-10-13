@@ -3,9 +3,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const HORARIO_SUCURSAL = "Lunes a sábado, 09:00 a 20:00";
   const $ = (id) => document.getElementById(id);
   const hasValue = (field) => !!field && field.value.trim() !== "";
-  const getProfileAddress = (profile) => [profile?.direccion, profile?.localidad, profile?.provincia, profile?.pais]
-    .filter(Boolean)
-    .join(", ");
+  const getProfileAddress = (profile) =>
+    [profile?.direccion, profile?.localidad, profile?.provincia, profile?.pais]
+      .filter(Boolean)
+      .join(", ");
+
   const profileFieldMap = {
     registerNombre: "nombre",
     registerApellido: "apellido",
@@ -27,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         nombre: "Sporting Outlet",
         direccion: "Avenida Siria 2345, San Miguel de Tucumán, Tucumán, Argentina",
-      }
+      },
     ],
     Salta: [
       {
@@ -37,13 +39,13 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         nombre: "Sporting Barrio San Martín",
         direccion: "San Martín 220, Salta, Argentina",
-      }
+      },
     ],
     Jujuy: [
       {
         nombre: "Sporting Jujuy",
         direccion: "Avenida Sarmiento 700, San Salvador de Jujuy, Jujuy, Argentina",
-      }
+      },
     ],
     Mendoza: [
       {
@@ -53,13 +55,13 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         nombre: "Sporting Godoy Cruz",
         direccion: "Avenida Colón 980, Godoy Cruz, Mendoza, Argentina",
-      }
+      },
     ],
     "Santiago del Estero": [
       {
         nombre: "Sporting Santiago del Estero",
         direccion: "Avenida Belgrano 1450, Santiago del Estero, Argentina",
-      }
+      },
     ],
     "Buenos Aires": [
       {
@@ -69,8 +71,8 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         nombre: "Sporting La Plata",
         direccion: "Calle 7 320, La Plata, Buenos Aires, Argentina",
-      }
-    ]
+      },
+    ],
   };
 
   const centroProvincia = {
@@ -79,11 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     Jujuy: "San Salvador de Jujuy, Jujuy, Argentina",
     Mendoza: "Mendoza, Argentina",
     "Santiago del Estero": "Santiago del Estero, Argentina",
-    "Buenos Aires": "Buenos Aires, Argentina"
+    "Buenos Aires": "Buenos Aires, Argentina",
   };
 
   const actualizarMapa = (direccion, provincia = "") => {
-    const mapa = document.getElementById("mapa-google");
+    const mapa = $("mapa-google");
     if (!mapa) return;
 
     const query = direccion || centroProvincia[provincia] || provincia || "Argentina";
@@ -92,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const cargarProvincia = (provincia) => {
     const sucursales = provincia ? sucursalesPorProvincia[provincia] || [] : [];
-    const lista = document.getElementById("sucursales-lista");
+    const lista = $("sucursales-lista");
     const mapa = document.getElementById("mapa-google");
     const mapaWrap = lista?.parentElement;
     const botones = document.querySelectorAll(".tienda-fisica-btn");
@@ -115,15 +117,15 @@ document.addEventListener("DOMContentLoaded", () => {
     mapa?.removeAttribute("hidden");
 
     lista.innerHTML = sucursales
-      .map((sucursal) => {
-        return `
-          <button type="button" class="sucursal-item" data-direccion="${sucursal.direccion}">
+      .map(
+        (sucursal) => `
+          <button type="button" class="sucursal-item d-block w-100 text-start bg-white fw-semibold" data-direccion="${sucursal.direccion}">
             ${sucursal.nombre}
-            <span class="sucursal-horario">Horario: ${HORARIO_SUCURSAL}</span>
-            <small>${sucursal.direccion}</small>
+            <span class="sucursal-horario d-block fw-semibold fs-6">Horario: ${HORARIO_SUCURSAL}</span>
+            <small class="d-block mt-1 fs-6">${sucursal.direccion}</small>
           </button>
-        `;
-      })
+        `,
+      )
       .join("");
 
     if (sucursales.length > 0) {
@@ -201,7 +203,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const provinceInput = $("registerProvincia");
     const provinceButtonText = $("provinceSelectedText");
     if (provinceInput) provinceInput.value = profile.provincia || "";
-    if (provinceButtonText) provinceButtonText.textContent = profile.provincia || "Seleccioná tu provincia";
+    if (provinceButtonText)
+      provinceButtonText.textContent = profile.provincia || "Seleccioná tu provincia";
   };
 
   document.querySelectorAll(".tienda-fisica-btn").forEach((boton) => {
@@ -306,7 +309,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const profile = Object.fromEntries(
-        Object.entries(profileFieldMap).map(([fieldId, profileKey]) => [profileKey, $(fieldId).value.trim()])
+        Object.entries(profileFieldMap).map(([fieldId, profileKey]) => [
+          profileKey,
+          $(fieldId).value.trim(),
+        ]),
       );
 
       saveProfile(profile);
@@ -369,7 +375,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const updateCart = () => {
     const selectedProducts = products.filter((product) => cart[product.id]);
     const quantityTotal = selectedProducts.reduce((total, product) => total + cart[product.id], 0);
-    const subtotal = selectedProducts.reduce((total, product) => total + product.price * cart[product.id], 0);
+    const subtotal = selectedProducts.reduce(
+      (total, product) => total + product.price * cart[product.id],
+      0,
+    );
     const shipping = subtotal === 0 || subtotal >= 150000 ? 0 : 8000;
     const total = subtotal + shipping;
 
@@ -397,27 +406,28 @@ document.addEventListener("DOMContentLoaded", () => {
     showProfileAddress();
 
     if (!selectedProducts.length) {
-      cartItemsElement.innerHTML = '<p class="cart-empty mb-0">Todavía no agregaste productos.</p>';
+      cartItemsElement.innerHTML =
+        '<p class="cart-empty mb-0 text-secondary py-4 text-center">Todavía no agregaste productos.</p>';
       return;
     }
 
     cartItemsElement.innerHTML = selectedProducts
       .map(
         (product) => `
-          <div class="cart-item">
-            <img src="${product.image}" alt="${product.name}" class="cart-item-image">
-            <div class="cart-item-info">
+          <div class="cart-item d-grid d-md-flex align-items-center justify-content-md-between pb-3">
+            <img src="${product.image}" alt="${product.name}" class="cart-item-image bg-light rounded-3 object-fit-contain">
+            <div class="cart-item-info d-grid gap-1">
               <strong>${product.name}</strong>
-              <span>$${formatPrice(product.price)} por unidad</span>
-              <div class="cart-item-controls">
-                <button type="button" class="cart-quantity-button" data-action="decrease" data-id="${product.id}" aria-label="Restar una unidad">−</button>
+              <span class="text-secondary">$${formatPrice(product.price)} por unidad</span>
+              <div class="cart-item-controls d-flex align-items-center gap-2 mt-1">
+                <button type="button" class="cart-quantity-button bg-white rounded-1 lh-1" data-action="decrease" data-id="${product.id}" aria-label="Restar una unidad">−</button>
                 <span>${cart[product.id]}</span>
-                <button type="button" class="cart-quantity-button" data-action="increase" data-id="${product.id}" aria-label="Sumar una unidad">+</button>
-                <button type="button" class="cart-remove" data-action="remove" data-id="${product.id}">Quitar</button>
+                <button type="button" class="cart-quantity-button bg-white rounded-1 lh-1" data-action="increase" data-id="${product.id}" aria-label="Sumar una unidad">+</button>
+                <button type="button" class="cart-remove bg-transparent border-0 p-0" data-action="remove" data-id="${product.id}">Quitar</button>
               </div>
             </div>
             <strong class="cart-item-total">$${formatPrice(product.price * cart[product.id])}</strong>
-          </div>`
+          </div>`,
       )
       .join("");
   };
@@ -464,7 +474,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const deliveryAddress = getProfileAddress(savedProfile);
-    cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
     cart = {};
     updateCart();
     cartFeedback.textContent = `Gracias ${savedProfile.nombre}. Tu pedido será enviado a ${deliveryAddress}.`;
